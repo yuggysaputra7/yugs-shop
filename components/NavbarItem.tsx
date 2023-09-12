@@ -139,7 +139,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ darkMode, handleClick }) => {
           <DialogActions>
             <Button
               onClick={closeModal}
-              className="bg-greenShop text-white w-32"
+              className="bg-greenShop text-white w-32 h-6"
             >
               Close
             </Button>

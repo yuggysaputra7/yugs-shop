@@ -24,7 +24,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
 
   return (
     <div
-      className={darkMode ? "bg-greenShop text-blueCalm" : " bg-transparent"}
+      className={
+        darkMode ? "bg-greenShop text-darkBlue" : " bg-white text-black"
+      }
     >
       <CartProvider>
         <NavbarItem darkMode={darkMode} handleClick={handleToggleDarkMode} />

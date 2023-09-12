@@ -33,9 +33,9 @@ const CarouselItem = () => {
             <Image
               src={item.image}
               alt={item.image}
-              className="w-full h-96 object-cover object-center "
+              className="mx-auto  w-full lg:w-1/2  h-96  flex items-center"
               width={1000}
-              height={80}
+              height={100}
             />
           </div>
         ))

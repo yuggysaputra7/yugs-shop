@@ -8,9 +8,12 @@ const config = {
   theme: {
     extend: {
       colors: {
-        greenShop: "#078080",
+        greenShop: "#00CC99",
         darkMode: "#1d2a35",
         blueCalm: "#abd1c6",
+        smooth: "#f3d2c1",
+        pink: "#f582ae",
+        darkBlue: "#001858",
       },
     },
   },

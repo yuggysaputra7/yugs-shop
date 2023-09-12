@@ -18,8 +18,10 @@ interface Product {
 
 const Cart: React.FC = () => {
   const { cart } = useCart();
-  const { removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const { removeFromCart, updateQuantity, getTotalPrice, getTotalQuantity } =
+    useCart();
   const totalPrice = getTotalPrice();
+  const totalQuantity = getTotalQuantity();
 
   const handleRemoveFromCart = (item: Product) => {
     removeFromCart(item.id);
@@ -39,24 +41,27 @@ const Cart: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-slate-800 mx-2 mt-2">Cart Shop</h2>
-      <Card className="w-full px-2 flex justify-center">
+      <h2 className="text-xl text-center font-bold text-slate-800 mx-2 p-2">
+        Cart Shop
+      </h2>
+      <Card className="w-full px-2 flex justify-center items-center">
         <List className="gap-4 border border-slate-400 rounded-lg">
           {cart.map((item) => (
-            <ListItem
-              key={item.id}
-              className="border border-green-400 rounded-lg shadow-md"
-            >
+            <ListItem key={item.id} className="border-b-2 border-gray-400  ">
               <ListItemPrefix>
                 <Avatar
-                  className="w-24 h-24 mx-2 border border-inherit rounded-xl object-cover"
+                  className="border border-slate-500 w-24 h-24 mx-6 p-4 rounded-xl object-fill"
                   variant="circular"
                   alt={item.image}
                   src={item.image}
                 />
               </ListItemPrefix>
-              <div className="p-4">
-                <Typography variant="h6" color="blue-gray" className="text-sm">
+              <div className="w-48 p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="text-sm"
+                >
                   {item.name}
                 </Typography>
                 <Typography
@@ -100,8 +105,8 @@ const Cart: React.FC = () => {
           ))}
         </List>
         <div>
-          <h2 className=" text-green-500 font-bold">
-            Total Harga: $ {totalPrice}
+          <h2 className=" text-green-500 font-bold p-2">
+            Total Harga ({totalQuantity} Barang): $ {totalPrice}
           </h2>
         </div>
       </Card>

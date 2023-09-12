@@ -8,9 +8,9 @@ import {
   getInCategory,
   getDetailProduct,
 } from "@/src/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { AiOutlineInfoCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 import {
   Card,
@@ -54,6 +54,12 @@ const Index: NextPage = () => {
   const [searchText, setSearchText] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const myRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (collapsed && myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [collapsed]);
   const toggleCollapse = () => {
     setCollapsed((prevCollapsed) => !prevCollapsed);
   };
@@ -62,6 +68,10 @@ const Index: NextPage = () => {
     getAllProduct((data: any) => {
       setDataProduct(data);
     });
+  };
+
+  const closeCategory = () => {
+    setCollapsed(false);
   };
 
   const openModalDetail = async (id: string) => {
@@ -184,16 +194,16 @@ const Index: NextPage = () => {
         <CarouselItem />
       </div>
 
-      <div className="shadow-md rounded-xl mt-8 mx-4">
-        <h2 className="font-bold mt-2">Pakai Voucher Makin Untung</h2>
-        <div
-          className="flex flex-col md:flex-row rounded-lg items-center"
-          style={{
-            backgroundImage: `url('/blurry.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
+      <div
+        className="shadow-md rounded-xl mt-8 mx-4"
+        style={{
+          backgroundImage: `url('/blurry.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <h2 className="font-bold mt-2 p-2">Pakai Voucher Makin Untung</h2>
+        <div className="flex flex-col md:flex-row rounded-lg items-center">
           {Array.isArray(dataKupon) && dataKupon.length > 0 ? (
             dataKupon.map((item, i) => {
               return (
@@ -227,52 +237,75 @@ const Index: NextPage = () => {
         </div>
       </div>
 
-      {collapsed && (
-        <div className="shadow-md rounded-xl mt-4  mx-4">
-          <h2 className="text-center font-bold mt-2">Category</h2>
-          <div className="flex flex-wrap mt-6 gap-4 mb-4 justify-center">
-            {Array.isArray(dataCategory) && dataCategory.length > 0 ? (
-              dataCategory.map((item, i) => (
-                <Card
-                  onClick={() => dataPerCategory(item)}
-                  key={i}
-                  className="mb-4 border border-gray-300 rounded-lg flex flex-col w-[300px] cursor-pointer hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                >
-                  <CardBody>
-                    <Image
-                      src={dataCategoryImage[i].image}
-                      alt={dataCategoryImage[i].image}
-                      width={200}
-                      height={200}
-                      className="mx-auto"
-                    />
-                    <Typography
-                      variant="h5"
-                      color="blue-gray"
-                      className="mb-2 capitalize text-md font-semibold text-center"
-                    >
-                      {item}
-                    </Typography>
-                  </CardBody>
-                </Card>
-              ))
-            ) : (
-              <span>No data available</span>
-            )}
-
+      <div ref={myRef}>
+        {collapsed && (
+          <div
+            className=" shadow-md rounded-xl mt-4  mx-4"
+            style={{
+              backgroundImage: `url('/blurry.png')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <h2 className="text-center font-bold p-2">Category</h2>
             <div
-              className=" bottom-0 font-bold text-green-500 cursor-pointer hover:text-red-500"
-              onClick={resetCategory}
+              className="flex items-center justify-end cursor-pointer mr-4 text-md hover:text-red-500"
+              onClick={closeCategory}
             >
-              Reset Category
+              Close
+            </div>
+
+            <div className="flex flex-wrap mt-6 gap-4 mb-4 justify-center">
+              {Array.isArray(dataCategory) && dataCategory.length > 0 ? (
+                dataCategory.map((item, i) => (
+                  <Card
+                    onClick={() => dataPerCategory(item)}
+                    key={i}
+                    className="mb-4 border border-gray-300 rounded-lg flex flex-col w-[300px] cursor-pointer hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                  >
+                    <CardBody>
+                      <Image
+                        src={dataCategoryImage[i].image}
+                        alt={dataCategoryImage[i].image}
+                        width={200}
+                        height={200}
+                        className="mx-auto"
+                      />
+                      <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="mb-2 capitalize text-md font-semibold text-center"
+                      >
+                        {item}
+                      </Typography>
+                    </CardBody>
+                  </Card>
+                ))
+              ) : (
+                <span>No data available</span>
+              )}
+
+              <div
+                className=" bottom-0 font-bold cursor-pointer hover:text-red-500"
+                onClick={resetCategory}
+              >
+                Reset Category
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      <div className=" shadow-md rounded-xl mt-4  mx-4">
-        <h2 className="text-center font-bold mt-2">Products</h2>
-        <div className="flex flex-wrap mt-6 gap-4 mb-4 justify-center">
+      <div
+        className=" shadow-md rounded-xl mt-4  mx-4"
+        style={{
+          backgroundImage: `url('/blurry.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <h2 className="text-center font-bold p-2">Products</h2>
+        <div className="flex flex-wrap mt-6 gap-4 mb-6 p-4 justify-center">
           {Array.isArray(dataProduct) && dataProduct.length > 0 ? (
             dataProduct
               .filter((item) =>
@@ -281,7 +314,7 @@ const Index: NextPage = () => {
               .map((item, i) => (
                 <Card
                   key={i}
-                  className="border border-gray-300 rounded-lg flex flex-col justify-between w-[300px] p-2 hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                  className="border  bg-white border-gray-300 rounded-lg flex flex-col justify-between w-[300px] p-2 hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                 >
                   <CardBody className="flex flex-col justify-center items-center">
                     <Image
@@ -289,12 +322,12 @@ const Index: NextPage = () => {
                       alt={item.image}
                       width={120}
                       height={100}
-                      className="mx-auto p-2"
+                      className="mx-auto p-4"
                     />
                     <Typography
                       variant="h5"
                       color="blue-gray"
-                      className="py-2 capitalize text-sm font-semibold text-center"
+                      className="p-4 capitalize text-sm font-semibold text-center "
                     >
                       {item.title}
                     </Typography>
@@ -321,10 +354,10 @@ const Index: NextPage = () => {
                       {item.rating.rate}
                     </Typography>
                   </CardBody>
-                  <CardFooter className="flex justify-between items-end px-2  gap-2">
+                  <CardFooter className="flex justify-between items-end gap-2">
                     <Button
                       onClick={() => openModalDetail(item.id)}
-                      className="text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      className="whitespace-nowrap p-4 text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
                       <AiOutlineInfoCircle className="mr-1 text-lg" />
                       Detail Product
@@ -339,9 +372,9 @@ const Index: NextPage = () => {
                           quantity: 0,
                         })
                       }
-                      className="bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      className="whitespace-nowrap bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
-                      <BsCartPlus className="mr-1 text-lg" /> Add to Cart
+                      <BsCartPlus className="mr-1 text-lg now" /> Add to Cart
                     </Button>
                   </CardFooter>
                 </Card>
