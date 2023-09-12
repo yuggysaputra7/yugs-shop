@@ -56,7 +56,7 @@ const Cart: React.FC = () => {
                 />
               </ListItemPrefix>
               <div className="p-4">
-                <Typography variant="h6" color="blue-gray" className="text-xl">
+                <Typography variant="h6" color="blue-gray" className="text-sm">
                   {item.name}
                 </Typography>
                 <Typography

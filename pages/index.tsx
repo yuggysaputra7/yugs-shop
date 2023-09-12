@@ -8,7 +8,7 @@ import {
   getInCategory,
   getDetailProduct,
 } from "@/src/api";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
@@ -20,7 +20,6 @@ import {
   Button,
   Alert,
 } from "@material-tailwind/react";
-import NavbarItem from "@/components/NavbarItem";
 import StarRating from "@/components/StarRating";
 import {
   Dialog,
@@ -37,6 +36,7 @@ interface Product {
   name: string;
   price: number;
   image: any;
+  quantity: number;
 }
 const Index: NextPage = () => {
   const { addToCart } = useCart();
@@ -133,6 +133,21 @@ const Index: NextPage = () => {
     });
   }, []);
 
+  const copyToClipboard = (value: string) => {
+    const tempInput = document.createElement("input");
+    tempInput.value = value;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+  };
+
   return (
     <div className="font-[Poppins">
       {/* <NavbarItem /> */}
@@ -181,19 +196,6 @@ const Index: NextPage = () => {
         >
           {Array.isArray(dataKupon) && dataKupon.length > 0 ? (
             dataKupon.map((item, i) => {
-              const textRef = useRef<HTMLInputElement>(null);
-              const copyToClipboard = () => {
-                if (textRef.current) {
-                  textRef.current.select();
-                  document.execCommand("copy");
-                  setShowAlert(true);
-
-                  setTimeout(() => {
-                    setShowAlert(false);
-                  }, 2000);
-                }
-              };
-
               return (
                 <div
                   key={i}
@@ -205,14 +207,13 @@ const Index: NextPage = () => {
 
                     <input
                       className="bg-greenShop text-white w-full mt-1 rounded-lg text-center"
-                      ref={textRef}
                       type="text"
                       value={item.value}
                       readOnly
                     />
                     <button
                       className="text-blue-500 w-full mt-1 rounded-lg"
-                      onClick={copyToClipboard}
+                      onClick={() => copyToClipboard(item.value)}
                     >
                       Salin
                     </button>
@@ -335,6 +336,7 @@ const Index: NextPage = () => {
                           name: item.title,
                           price: item.price,
                           image: item.image,
+                          quantity: 0,
                         })
                       }
                       className="bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
