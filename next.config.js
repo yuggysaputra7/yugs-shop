@@ -3,4 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-module.exports = nextConfig;
+// next.config.js
+
+module.exports = {
+  images: {
+    domains: ["fakestoreapi.com", "images.unsplash.com"], // Tambahkan hostname yang diizinkan di sini
+  },
+};

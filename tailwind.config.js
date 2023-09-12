@@ -4,8 +4,15 @@ const config = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        greenShop: "#078080",
+        darkMode: "#1d2a35",
+        blueCalm: "#abd1c6",
+      },
+    },
   },
   plugins: [],
 };
