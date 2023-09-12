@@ -47,7 +47,7 @@ const Cart: React.FC = () => {
       <Card className="w-full px-2 flex justify-center items-center">
         <List className="gap-4 border border-slate-400 rounded-lg">
           {cart.map((item) => (
-            <ListItem key={item.id} className="border-b-2 border-gray-400  ">
+            <ListItem key={item.id} className="border-b-2 border-gray-400 p-2 ">
               <ListItemPrefix>
                 <Avatar
                   className="border border-slate-500 w-24 h-24 mx-6 p-4 rounded-xl object-fill"
