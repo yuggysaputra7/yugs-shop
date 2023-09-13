@@ -445,7 +445,7 @@ const Index: NextPage = () => {
         </div>
       </footer>
       {showAlert && (
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-greenShop text-white rounded-lg text-center p-2">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-slate-500 text-white rounded-lg text-center p-2">
           <Alert variant="gradient">
             <span>Kode Promo Tersalin.</span>
           </Alert>

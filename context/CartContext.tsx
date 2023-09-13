@@ -85,7 +85,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     >
       <>
         {showAlert && (
-          <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-greenShop text-white rounded-lg text-center p-2">
+          <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-red-500 text-white rounded-lg text-center p-2">
             <Alert variant="gradient">
               <span>
                 Barang sudah ada di keranjang, silahkan pilih barang lain
