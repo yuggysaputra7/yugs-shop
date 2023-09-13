@@ -190,7 +190,7 @@ const Index: NextPage = () => {
         </div>
       </div>
 
-      <div className="px-8 mt-4">
+      <div className="p-8 mt-6">
         <CarouselItem />
       </div>
 
@@ -357,7 +357,7 @@ const Index: NextPage = () => {
                   <CardFooter className="flex justify-between items-end gap-2">
                     <Button
                       onClick={() => openModalDetail(item.id)}
-                      className="whitespace-nowrap p-4 text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      className="whitespace-nowrap text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
                       <AiOutlineInfoCircle className="mr-1 text-lg" />
                       Detail Product
@@ -374,7 +374,7 @@ const Index: NextPage = () => {
                       }
                       className="whitespace-nowrap bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
-                      <BsCartPlus className="mr-1 text-lg now" /> Add to Cart
+                      <BsCartPlus className="mr-1 text-lg" /> Add to Cart
                     </Button>
                   </CardFooter>
                 </Card>
@@ -445,7 +445,7 @@ const Index: NextPage = () => {
         </div>
       </footer>
       {showAlert && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-greenShop text-white rounded-lg text-center p-2">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-greenShop text-white rounded-lg text-center p-2">
           <Alert variant="gradient">
             <span>Kode Promo Tersalin.</span>
           </Alert>
