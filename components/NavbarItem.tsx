@@ -30,6 +30,13 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ darkMode, handleClick }) => {
     setModalOpen(true);
   };
 
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   const totalUniqueItems = getTotalUniqueItems();
   const cartIcon = "/shopping-cart.png";
   const logo = "/logo.png";
@@ -49,7 +56,12 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ darkMode, handleClick }) => {
   }, []);
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:ml-8 lg:flex-row  lg:gap-4"></ul>
+    <ul
+      onClick={scrollToBottom}
+      className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:ml-8 lg:flex-row  lg:gap-4 lg:hidden"
+    >
+      About
+    </ul>
   );
 
   return (

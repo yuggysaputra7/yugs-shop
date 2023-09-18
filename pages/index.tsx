@@ -214,7 +214,14 @@ const Index: NextPage = () => {
         </div>
       </div>
 
-      <div className="p-8 -mt-24">
+      <div
+        className="p-8 -mt-24 rounded-lg"
+        style={{
+          backgroundImage: `url('/blurry.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <CarouselItem />
       </div>
 

@@ -12,16 +12,18 @@ const settings = {
   slidesToScroll: 1,
 };
 
-const banner1 = "/banner2.png";
-const banner2 = "/banner1.png";
-const banner3 = "/banner3.png";
-const banner4 = "/banner4.png";
+const banner1 = "/banner1.webp";
+const banner2 = "/banner2.webp";
+const banner3 = "/banner3.webp";
+const banner4 = "/banner4.webp";
+const banner5 = "/banner5.webp";
 
 const imageCarousel = [
   { image: banner1 },
   { image: banner2 },
   { image: banner3 },
   { image: banner4 },
+  { image: banner5 },
 ];
 
 const CarouselItem = () => {
@@ -33,7 +35,7 @@ const CarouselItem = () => {
             <Image
               src={item.image}
               alt={item.image}
-              className="mx-auto  w-full lg:w-1/2  h-96  flex items-center"
+              className="rounded-lg w-full object-cover"
               width={1000}
               height={100}
             />
