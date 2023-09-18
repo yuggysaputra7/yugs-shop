@@ -410,7 +410,11 @@ const Index: NextPage = () => {
                   </CardBody>
 
                   {isLoading ? (
-                    <Skeleton animation="wave" variant="rounded" />
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      className="mt-2"
+                    />
                   ) : (
                     <CardFooter className="flex justify-between items-end gap-2">
                       <Button
