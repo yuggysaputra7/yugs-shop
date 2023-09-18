@@ -26,6 +26,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Skeleton,
 } from "@mui/material";
 import { useCart } from "../context/CartContext";
 import ScrollTopButton from "@/components/ScrollTopButton";
@@ -53,8 +54,10 @@ const Index: NextPage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const myRef = useRef<HTMLDivElement>(null);
+  const myRefProduct = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (collapsed && myRef.current) {
       myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -65,8 +68,12 @@ const Index: NextPage = () => {
   };
 
   const resetCategory = () => {
+    setIsLoading(true);
     getAllProduct((data: any) => {
       setDataProduct(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     });
   };
 
@@ -122,11 +129,24 @@ const Index: NextPage = () => {
   }
 
   const dataPerCategory = (category: string) => {
+    if (myRefProduct.current) {
+      const offset =
+        myRefProduct.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: offset - 130,
+        behavior: "smooth",
+      });
+    }
+    setIsLoading(true);
+
     getInCategory(category, async (response: ResponseType) => {
       console.log(response, "data kirim");
       try {
-        const updatedData: any = response; // Assuming you want the data from the response
-        setDataProduct(updatedData); // Assuming `setDataProduct` is a valid function
+        const updatedData: any = response;
+        setDataProduct(updatedData);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       } catch (error) {
         console.error("Error while updating data:", error);
       }
@@ -134,8 +154,12 @@ const Index: NextPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getAllProduct((data: any) => {
       setDataProduct(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     });
 
     getCategory((data: any) => {
@@ -211,23 +235,30 @@ const Index: NextPage = () => {
                   key={i}
                   className="text-black justify-center gap-4 text-sm p-4 w-full md:w-auto"
                 >
-                  <div className="bg-slate-300 p-2 border border-neutral-300 rounded-md shadow-md">
-                    <h2>{item.title}</h2>
-                    <h2>Cashback s/d {item.diskon}</h2>
-
-                    <input
-                      className="bg-greenShop text-white w-full mt-1 rounded-lg text-center"
-                      type="text"
-                      value={item.value}
-                      readOnly
+                  {isLoading ? (
+                    <Skeleton
+                      variant="rounded"
+                      className="w-full h-24 md:w-48"
                     />
-                    <button
-                      className="text-blue-500 w-full mt-1 rounded-lg"
-                      onClick={() => copyToClipboard(item.value)}
-                    >
-                      Salin
-                    </button>
-                  </div>
+                  ) : (
+                    <div className="bg-slate-300 p-2 border border-neutral-300 rounded-md shadow-md">
+                      <h2>{item.title}</h2>
+                      <h2>Cashback s/d {item.diskon}</h2>
+
+                      <input
+                        className="bg-greenShop text-white w-full mt-1 rounded-lg text-center"
+                        type="text"
+                        value={item.value}
+                        readOnly
+                      />
+                      <button
+                        className="text-blue-500 w-full mt-1 rounded-lg"
+                        onClick={() => copyToClipboard(item.value)}
+                      >
+                        Salin
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })
@@ -269,7 +300,7 @@ const Index: NextPage = () => {
                         alt={dataCategoryImage[i].image}
                         width={200}
                         height={200}
-                        className="mx-auto"
+                        className="mx-auto "
                       />
                       <Typography
                         variant="h5"
@@ -297,6 +328,7 @@ const Index: NextPage = () => {
       </div>
 
       <div
+        ref={myRefProduct}
         className=" shadow-md rounded-xl mt-4  mx-4"
         style={{
           backgroundImage: `url('/blurry.png')`,
@@ -317,66 +349,86 @@ const Index: NextPage = () => {
                   className="border  bg-white border-gray-300 rounded-lg flex flex-col justify-between w-[300px] p-2 hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                 >
                   <CardBody className="flex flex-col justify-center items-center">
-                    <Image
-                      src={item.image}
-                      alt={item.image}
-                      width={120}
-                      height={100}
-                      className="mx-auto p-4"
-                    />
-                    <Typography
-                      variant="h5"
-                      color="blue-gray"
-                      className="p-4 capitalize text-sm font-semibold text-center "
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      color="blue-gray"
-                      className="mb-2 capitalize text-sm font-semibold text-center"
-                    >
-                      Category : {item.category}
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      color="blue-gray"
-                      className="mb-2 capitalize text-sm font-semibold text-center"
-                    >
-                      Price : $ {item.price}
-                    </Typography>
-                    <StarRating rating={item.rating.rate} />
-                    <Typography
-                      variant="h5"
-                      color="blue-gray"
-                      className="mb-2 capitalize text-sm font-semibold text-center"
-                    >
-                      {item.rating.rate}
-                    </Typography>
+                    {isLoading ? (
+                      <Skeleton variant="rounded" width={250} height={80} />
+                    ) : (
+                      <Image
+                        src={item.image}
+                        alt={item.image}
+                        width={120}
+                        height={100}
+                        className="mx-auto p-4"
+                      />
+                    )}
+                    {isLoading ? (
+                      <Skeleton
+                        variant="rounded"
+                        width={250}
+                        height={50}
+                        className="mt-2"
+                      />
+                    ) : (
+                      <>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="p-4 capitalize text-sm font-semibold text-center "
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2 capitalize text-sm font-semibold text-center"
+                        >
+                          Category : {item.category}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2 capitalize text-sm font-semibold text-center"
+                        >
+                          Price : $ {item.price}
+                        </Typography>
+                        <StarRating rating={item.rating.rate} />
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2 capitalize text-sm font-semibold text-center"
+                        >
+                          {item.rating.rate}
+                        </Typography>
+                      </>
+                    )}
                   </CardBody>
-                  <CardFooter className="flex justify-between items-end gap-2">
-                    <Button
-                      onClick={() => openModalDetail(item.id)}
-                      className="whitespace-nowrap text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <AiOutlineInfoCircle className="mr-1 text-lg" />
-                      Detail Product
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        handleAddToCart({
-                          id: item.id,
-                          name: item.title,
-                          price: item.price,
-                          image: item.image,
-                          quantity: 0,
-                        })
-                      }
-                      className="whitespace-nowrap bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <BsCartPlus className="mr-1 text-lg" /> Add to Cart
-                    </Button>
-                  </CardFooter>
+
+                  {isLoading ? (
+                    <Skeleton animation="wave" variant="rounded" />
+                  ) : (
+                    <CardFooter className="flex justify-between items-end gap-2">
+                      <Button
+                        onClick={() => openModalDetail(item.id)}
+                        className="whitespace-nowrap text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      >
+                        <AiOutlineInfoCircle className="mr-1 text-lg" />
+                        Detail Product
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          handleAddToCart({
+                            id: item.id,
+                            name: item.title,
+                            price: item.price,
+                            image: item.image,
+                            quantity: 0,
+                          })
+                        }
+                        className="whitespace-nowrap bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      >
+                        <BsCartPlus className="mr-1 text-lg" /> Add to Cart
+                      </Button>
+                    </CardFooter>
+                  )}
                 </Card>
               ))
           ) : (

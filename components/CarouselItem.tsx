@@ -12,8 +12,8 @@ const settings = {
   slidesToScroll: 1,
 };
 
-const banner1 = "/banner1.png";
-const banner2 = "/banner2.png";
+const banner1 = "/banner2.png";
+const banner2 = "/banner1.png";
 const banner3 = "/banner3.png";
 const banner4 = "/banner4.png";
 
