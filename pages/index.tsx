@@ -116,7 +116,7 @@ const Index: NextPage = () => {
     { title: "Pakai Paylater Dong", diskon: "70%", value: "PP70" },
     { title: "Pelanggan Baru Khusus Jewelry", diskon: "20%", value: "PBJ20" },
     {
-      title: "Pelanggan BaruKhusus Electronics",
+      title: "Pelanggan Baru Khusus Electronics",
       diskon: "20%",
       value: "PBE20",
     },
@@ -215,7 +215,7 @@ const Index: NextPage = () => {
       </div>
 
       <div
-        className="p-8 -mt-24 rounded-lg"
+        className="p-8 -mt-24 rounded-lg mr-4 ml-4"
         style={{
           backgroundImage: `url('/blurry.png')`,
           backgroundSize: "cover",
@@ -233,14 +233,16 @@ const Index: NextPage = () => {
           backgroundPosition: "center",
         }}
       >
-        <h2 className="font-bold mt-2 p-2">Pakai Voucher Makin Untung</h2>
-        <div className="flex flex-col md:flex-row rounded-lg items-center">
+        <h2 className="font-bold mt-2 p-2 text-center">
+          Pakai Voucher Makin Untung
+        </h2>
+        <div className="grid grid-cols-3 md:grid-cols-6 rounded-lg w-auto">
           {Array.isArray(dataKupon) && dataKupon.length > 0 ? (
             dataKupon.map((item, i) => {
               return (
                 <div
                   key={i}
-                  className="text-black justify-center gap-4 text-sm p-4 w-full md:w-auto"
+                  className="text-black text-sm p-4 w-full md:w-full "
                 >
                   {isLoading ? (
                     <Skeleton
@@ -248,18 +250,18 @@ const Index: NextPage = () => {
                       className="w-full h-24 md:w-48"
                     />
                   ) : (
-                    <div className="bg-slate-300 p-2 border border-neutral-300 rounded-md shadow-md">
+                    <div className="h-52 w-full md:h-48 flex flex-col justify-around  bg-slate-300 p-2 border border-neutral-300 rounded-md shadow-md">
                       <h2>{item.title}</h2>
                       <h2>Cashback s/d {item.diskon}</h2>
 
                       <input
-                        className="bg-greenShop text-white w-full mt-1 rounded-lg text-center"
+                        className="bg-greenShop text-white w-full rounded-lg text-center"
                         type="text"
                         value={item.value}
                         readOnly
                       />
                       <button
-                        className="text-blue-500 w-full mt-1 rounded-lg"
+                        className="text-blue-500 w-full rounded-lg"
                         onClick={() => copyToClipboard(item.value)}
                       >
                         Salin
@@ -286,20 +288,22 @@ const Index: NextPage = () => {
             }}
           >
             <h2 className="text-center font-bold p-2">Category</h2>
-            <div
-              className="flex text-slate-500 items-center justify-end cursor-pointer mr-4 text-md hover:text-red-500"
-              onClick={closeCategory}
-            >
-              Close
+            <div className="flex justify-end gap-4 p-4 text-slate-500 cursor-pointer ">
+              <span className="hover:text-red-500" onClick={resetCategory}>
+                Reset Category
+              </span>
+              <span className="hover:text-red-500" onClick={closeCategory}>
+                Close
+              </span>
             </div>
 
-            <div className="flex flex-wrap mt-6 gap-4 mb-4 justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
               {Array.isArray(dataCategory) && dataCategory.length > 0 ? (
                 dataCategory.map((item, i) => (
                   <Card
                     onClick={() => dataPerCategory(item)}
                     key={i}
-                    className="mb-4 border border-gray-300 rounded-lg flex flex-col w-[300px] cursor-pointer hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                    className="mb-4 border border-gray-300 rounded-lg p-4 cursor-pointer hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                   >
                     <CardBody>
                       <Image
@@ -322,13 +326,6 @@ const Index: NextPage = () => {
               ) : (
                 <span>No data available</span>
               )}
-
-              <div
-                className="text-slate-500 bottom-0 font-bold cursor-pointer hover:text-red-500 p-2"
-                onClick={resetCategory}
-              >
-                Reset Category
-              </div>
             </div>
           </div>
         )}
@@ -416,10 +413,10 @@ const Index: NextPage = () => {
                       className="mt-2"
                     />
                   ) : (
-                    <CardFooter className="flex justify-between items-end gap-2">
+                    <CardFooter className="grid grid-cols-2 w-auto gap-4">
                       <Button
                         onClick={() => openModalDetail(item.id)}
-                        className="whitespace-nowrap text-sm font-thin bg-blue-500 text-white w-40 h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        className="whitespace-nowrap text-sm font-thin bg-blue-500 text-white h-10  flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                       >
                         <AiOutlineInfoCircle className="mr-1 text-lg" />
                         Detail Product
@@ -434,7 +431,7 @@ const Index: NextPage = () => {
                             quantity: 0,
                           })
                         }
-                        className="whitespace-nowrap bg-green-500 font-thin text-sm w-40 h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        className="whitespace-nowrap bg-green-500 font-thin text-sm h-10 text-white shadow flex items-center justify-center hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                       >
                         <BsCartPlus className="mr-1 text-lg" /> Add to Cart
                       </Button>
@@ -501,12 +498,7 @@ const Index: NextPage = () => {
           </DialogActions>
         </Dialog>
       </div>
-      <footer className="bg-greenShop text-white py-4 bottom-0 left-0 w-full">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2023. Created By : Yuggy Saputra</p>
-          <p>Built using Next Js & Tailwind</p>
-        </div>
-      </footer>
+
       {showAlert && (
         <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-64 border border-white bg-slate-500 text-white rounded-lg text-center p-2">
           <Alert variant="gradient">

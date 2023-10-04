@@ -65,7 +65,11 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ darkMode, handleClick }) => {
   );
 
   return (
-    <div className="bg-greenShop fixed top-0 w-full z-10">
+    <div
+      className={`fixed top-0 w-full z-10 ${
+        darkMode ? "bg-darkMode" : "bg-greenShop"
+      }`}
+    >
       <Navbar className=" mx-auto py-2 px-4 lg:px-6 lg:py-4 border-none bg-blueLogin text-white font-[Poppins]  ">
         <div className="container mx-auto flex items-center justify-between text-blue-gray-900 ">
           <div className="flex items-center">

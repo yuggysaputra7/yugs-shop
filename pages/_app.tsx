@@ -25,13 +25,23 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <div
       className={
-        darkMode ? "bg-greenShop text-darkBlue" : " bg-white text-black"
+        darkMode ? "bg-darkMode text-darkBlue" : " bg-white text-black"
       }
     >
       <CartProvider>
         <NavbarItem darkMode={darkMode} handleClick={handleToggleDarkMode} />
-        <Component {...pageProps} />
+        <Component {...pageProps} darkMode={darkMode} />
       </CartProvider>
+      <footer
+        className={`text-white py-4 bottom-0 left-0 w-full ${
+          darkMode ? "bg-darkMode" : "bg-greenShop"
+        }`}
+      >
+        <div className="container mx-auto text-center">
+          <p>&copy; 2023. Created By : Yuggy Saputra</p>
+          <p>Built using Next Js & Tailwind</p>
+        </div>
+      </footer>
     </div>
   );
 };
